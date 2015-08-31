@@ -2,8 +2,26 @@
 <html>
   <head>
     <title>Messenger</title>
+    <link rel="stylesheet" type="text/css" href="css/app.css">
   </head>
   <body>
+
+    <script type="text/x-handlebars" data-template-name="index">
+      <div class="container">
+        <li>
+          {{input type="text" name="username" maxlength="15" value=name placeholder="Full Name"}}
+          {{input type="text" name="userid" maxlength="15" value=userid placeholder="username *"}}
+          <button {{action "submitForm"}}>Join chat</button>
+          <span class="username">Enter an unique username</span>
+        </li>
+        <div class="prompt-usernames">
+          {{#each sugg_username in sugg_usernames}}
+            {{sugg_username}} | 
+          {{/each}}
+        </div>
+      </div>
+    </script>
+
     <script src="vendor/jquery-1.10.2.min.js"></script>
     <script src="vendor/handlebars.js"></script>
     <script src="vendor/ember.js"></script>
