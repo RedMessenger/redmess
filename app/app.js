@@ -12,6 +12,9 @@
 	App.IndexController = Ember.Controller.extend({
 		name : "",
 		userid : "",
+		hasJoined : false,
+		users : [],
+
 		actions : {
 			submitForm : function () {
 				if(this.get('userid') === "")
@@ -30,7 +33,8 @@
 			return function () {
 				socket.emit('registeruser', user_details);
 				socket.on('online_user_list', function (data) {
-					// Set user list here
+					_this.set('users', data);
+					_this.set('hasJoined', true);
 				});
 			};
 		}
