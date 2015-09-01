@@ -47,10 +47,13 @@
               </div>
             </header>
           <ol class="users-list">
-            {{#each user in users}}
+            {{#each user in mod_users}}
               <li {{action "selectUser" user}}>
                 <div class="fullname">{{user.name}} </div>
                 <div class="onlineuserid"> ({{user.userid}}) </div>
+                {{#if user.areMessages}}
+                  <div class="msg-cnt">{{user.messageCount}}</div>
+                {{/if}}
               </li>
             {{else}}
                 <span class="msg">No users online</span>

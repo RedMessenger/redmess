@@ -31,25 +31,59 @@
 			},
 			selectUser : function (user) {
 				var socket = App.socket;
+				user.set('areMessages', false);
+				if(!user.get('messages'))
+					user.set('messages', []);
+				this.set('messages', user.get('messages'));
 				this.set("otherUser", user);
 				socket.emit("otheruser", user);
 			}
 		},
+		mod_users: function () {
+			return this.get('users');
+		}.property('users','users.[]'),
+
 		handleConnection : function (socket, user_details) {
 			var _this = this;
 			return function () {
 				socket.emit('registeruser', user_details);
+				
 				socket.on('online_user_list', function (data) {
-					_this.set('users', data);
+					var users = [];
+					data.forEach(function (user) {
+						users.pushObject(Ember.Object.create(user));
+					});
+					_this.set('users', users);
 					_this.set('hasJoined', true);
 				});
+
 				socket.on("messageFrom", function (msgObj) {
-					_this.set("otherUser", msgObj.from);
-					socket.emit("otheruser", msgObj.from);
-					_this.get('messages').pushObject({
-						direction : 'other',
-						body : msgObj.message
-					});
+					var users = _this.get('users'),
+						isNotInView = (_this.get('otherUser') && _this.get('otherUser.userid') !== msgObj.from.userid) ||
+										!_this.get('otherUser');
+
+					for(var i = 0; i < users.length; i += 1) {
+						var user = users[i];
+						if(user.get('userid') == msgObj.from.userid) {
+							var messages = user.hasOwnProperty('messages') ?
+											user.get('messages') : [];
+
+							messages.pushObject({
+								direction : 'other',
+								body : msgObj.message
+							});
+							user.set('messages', messages);
+							user.set('messageCount', messages.length);
+							user.set('areMessages', messages.length > 0 && isNotInView);
+						}
+						users[i] = user;
+					}
+
+					_this.set('users', users);
+
+					if(isNotInView) {
+						return;
+					}
 				});
 			};
 		},
@@ -72,12 +106,15 @@
 
 		_clearBlankScreen : function () {
 			var users = this.get('users');
-			users = users.map(function (user) { return user.userid; });
-			console.log(users);
-			console.log(this.get('otherUser'));
-			if(this.get('otherUser') && users.indexOf(this.get('otherUser').userid) < 0) {
+			users = users.map(this.mapUserId);
+			
+			if(this.get('otherUser') && users.indexOf(this.get('otherUser.userid')) < 0) {
 				this.set('otherUser', null);
 			}
-		}.observes('users')
+		}.observes('users'),
+
+		mapUserId : function (user) {
+			return user.userid;
+		}
 	});
 })();

@@ -281,3 +281,16 @@ textarea {
   padding: 3px;
   width: 99%;
 }
+
+.msg-cnt {
+  display: inline-block;
+  margin: 0 5px 0 5px;
+  height: 16px;
+  line-height: 16px;
+  width: 16px;
+  color: gray;
+  font-size: 12px;
+  text-align: center;
+  background: rgba(239, 94, 158, 0.57);
+  border-radius: 8px;
+}
