@@ -15,39 +15,45 @@
             </div>
             <span class="user-details">{{name}} ({{userid}})</span>
           </header>
-          <ol class="discussion">    
-            <li class="other">      
-              <div class="avatar">        
-                <img src="unknown.jpeg" />
-              </div>      
-              <div class="messages">        
-                <p>yeah, they do early flights cause they connect with big airports.  they wanna get u to your connection</p>        
-                <time datetime="2009-11-13T20:00">Timothy 51 min</time>      
-              </div>    
-            </li>    
-            <li class="self">      
-              <div class="avatar">        
-                <img src="unknown.jpeg" />      
-              </div>     
-              <div class="messages">        
-                <p>That makes sense. Isnt it</p>        
-                <p>Its a pretty small airport.</p>        
-                <time datetime="2009-11-13T20:14">37 mins</time>      
-              </div>    
-            </li>    
-            <li class="other">      
-              <div class="avatar">        
-                <img src="unknown.jpeg" />
-              </div>      
-              <div class="messages">        
-                <p>that mongodb thing looks good, huh?</p>        
-                <p>          tiny master db, and huge document store</p>      
-              </div>    
-            </li>
-          </ol>
-          <li>
+          {{#if otherUser}}
+            <ol class="discussion">
+              <li class="other">      
+                <div class="avatar">        
+                  <img src="unknown.jpeg" />
+                </div>      
+                <div class="messages">        
+                  <p>yeah, they do early flights cause they connect with big airports.  they wanna get u to your connection</p>        
+                  <time datetime="2009-11-13T20:00">Timothy 51 min</time>      
+                </div>    
+              </li>    
+              <li class="self">      
+                <div class="avatar">        
+                  <img src="unknown.jpeg" />      
+                </div>     
+                <div class="messages">        
+                  <p>That makes sense. Isnt it</p>        
+                  <p>Its a pretty small airport.</p>        
+                  <time datetime="2009-11-13T20:14">37 mins</time>      
+                </div>    
+              </li>    
+              <li class="other">      
+                <div class="avatar">        
+                  <img src="unknown.jpeg" />
+                </div>      
+                <div class="messages">        
+                  <p>that mongodb thing looks good, huh?</p>        
+                  <p>          tiny master db, and huge document store</p>      
+                </div>    
+              </li>
+            </ol>
+            <li>
               <textarea></textarea>
-          </li>
+            </li>
+          {{else}}
+            <ol class="discussion no-chat-begin">
+              <span class="msg">Start chatting with the people online.</span>
+            </ol>
+          {{/if}}
         </section>
         <section class="messenger">
           <header class="top-bar">
@@ -62,6 +68,8 @@
                 <div class="fullname">{{user.name}} </div>
                 <div class="onlineuserid"> ({{user.userid}}) </div>
               </li>
+            {{else}}
+                <span class="msg">No users online</span>
             {{/each}}
           </ol>
         </section>

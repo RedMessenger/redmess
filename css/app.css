@@ -251,3 +251,16 @@ textarea {
 	font-style: italic;
 	line-height: 18px;
 }
+
+.no-chat-begin {
+	height: 530px;
+	text-align: center;
+	background: white;
+	border: 1px solid #e5e5e5;
+}
+
+.msg {
+	padding-top: 200px;
+	font-size: 20px;
+	background: white;
+}
