@@ -20,8 +20,6 @@
 		registerEvents : function (socket) {
 			var _this = this;
 			socket.on('registeruser', function (user_details) {
-				
-				console.log(user_details);
 				activeSockets[socket.id]['user_details'] = user_details;
 				
 				var keys = Object.keys(activeSockets);
@@ -35,15 +33,22 @@
 				var keys = Object.keys(activeSockets);
 				for(var i = 0; i < keys.length; i += 1) {
 					if(activeSockets[keys[i]]['user_details'].userid == user_details.userid) {
-						console.log('Other user is ' + activeSockets[keys[i]]['user_details'].userid);
 						activeSockets[socket.id]['other_socket_id'] = activeSockets[keys[i]].socket.id;
 					}
 				}
 			});
 
+			socket.on("messageTo", function (messageToSend) {
+				var oSock = activeSockets[activeSockets[socket.id]['other_socket_id']];
+				
+				oSock['socket'].emit("messageFrom", {
+					from : activeSockets[socket.id]['user_details'],
+					to : oSock['user_details'],
+					message : messageToSend
+				});
+			});
+
 			socket.on('disconnect', function () {
-				console.log('Disconnected user : ');
-				console.log(activeSockets[socket.id]['user_details']);
 				delete activeSockets[socket.id];
 
 				var keys = Object.keys(activeSockets);
@@ -60,7 +65,6 @@
 					users.push(activeSockets[key]['user_details']);
 				}
 			});
-			console.log(users);
 			return users;
 		}
 	};

@@ -43,8 +43,33 @@
 					_this.set('users', data);
 					_this.set('hasJoined', true);
 				});
+				socket.on("messageFrom", function (msgObj) {
+					_this.set("otherUser", msgObj.from);
+					socket.emit("otheruser", msgObj.from);
+					_this.get('messages').pushObject({
+						direction : 'other',
+						body : msgObj.message
+					});
+				});
 			};
 		},
+		
+		_sendMessage: function () {
+			var messageToSend = this.get('messageToSend'),
+				_this = this;
+			if(messageToSend.indexOf('\n') > 0) {
+				var socket = App.socket;
+				_this.set('messageToSend',"");
+
+				socket.emit("messageTo", messageToSend);
+				
+				_this.get('messages').pushObject({
+					direction : 'self',
+					body : messageToSend
+				});
+			}
+		}.observes('messageToSend'),
+
 		_clearBlankScreen : function () {
 			var users = this.get('users');
 			users = users.map(function (user) { return user.userid; });

@@ -24,16 +24,14 @@
                     <img src="unknown.jpeg" />
                   </div>
                   <div class="messages">
-                    {{#each newline in message.body}}
-                      <p>{{newline}}</p>
-                    {{/each}}
+                    <p>{{message.body}}</p>
                     <time datetime="2009-11-13T20:14">37 mins</time>
                   </div>
                 </li>
               {{/each}}
             </ol>
             <li>
-              <textarea class="chat-msg" placeholder="Type your message here"></textarea>
+              {{textarea class="chat-msg" placeholder="Type your message here" value=messageToSend}}
             </li>
           {{else}}
             <ol class="discussion no-chat-begin">
@@ -80,6 +78,7 @@
     <script src="vendor/handlebars.js"></script>
     <script src="vendor/ember.js"></script>
     <script src="vendor/socket.io-1.2.0.js"></script>
+    <script src="vendor/moment.min.js"></script>
     <script src="app/app.js"></script>
   </body>
 </html>
