@@ -8,16 +8,62 @@
 
     <script type="text/x-handlebars" data-template-name="index">
       {{#if hasJoined}}
-        <div class="messenger">
-          <ul class="users-list side-pane">
+        <section class="module">    
+          <header class="top-bar">        
+            <div class="left">
+              <h1>Messenger</h1>    
+            </div>
+          </header>
+          <ol class="discussion">    
+            <li class="other">      
+              <div class="avatar">        
+                <img src="unknown.jpeg" />
+              </div>      
+              <div class="messages">        
+                <p>yeah, they do early flights cause they connect with big airports.  they wanna get u to your connection</p>        
+                <time datetime="2009-11-13T20:00">Timothy 51 min</time>      
+              </div>    
+            </li>    
+            <li class="self">      
+              <div class="avatar">        
+                <img src="unknown.jpeg" />      
+              </div>     
+              <div class="messages">        
+                <p>That makes sense.</p>        
+                <p>Its a pretty small airport.</p>        
+                <time datetime="2009-11-13T20:14">37 mins</time>      
+              </div>    
+            </li>    
+            <li class="other">      
+              <div class="avatar">        
+                <img src="unknown.jpeg" />
+              </div>      
+              <div class="messages">        
+                <p>that mongodb thing looks good, huh?</p>        
+                <p>          tiny master db, and huge document store</p>      
+              </div>    
+            </li>
+          </ol>
+          <li>
+              <textarea></textarea>
+          </li>
+        </section>
+        <section class="messenger">
+          <header class="top-bar">
+              <div class="left">
+                  <span class="typicons-message online"></span>
+                  <h1>Online users</h1>    
+              </div>
+            </header>    
+          <ol class="users-list">
             {{#each user in users}}
               <li>
                 <div class="fullname">{{user.name}}</div>
                 <div class="onlineuserid">{{user.userid}}</div>
               </li>
             {{/each}}
-          </div>
-        </div>
+          </ol>
+        </section>
       {{else}}
         <div class="container">
           <li>
