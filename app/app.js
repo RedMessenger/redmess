@@ -49,9 +49,15 @@
 				socket.emit('registeruser', user_details);
 				
 				socket.on('online_user_list', function (data) {
-					var users = [];
+					var users = [], old_users = _this.get('users');
 					data.forEach(function (user) {
-						users.pushObject(Ember.Object.create(user));
+						if(old_users.map(_this.mapUserId).indexOf(user.userid) < 0)
+							users.pushObject(Ember.Object.create(user));
+
+					});
+					old_users.forEach(function (user) {
+						if(data.map(_this.mapUserId).indexOf(user.userid) > -1)
+							users.pushObject(user);
 					});
 					_this.set('users', users);
 					_this.set('hasJoined', true);
