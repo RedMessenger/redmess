@@ -57,35 +57,38 @@
 					_this.set('hasJoined', true);
 				});
 
-				socket.on("messageFrom", function (msgObj) {
-					var users = _this.get('users'),
-						isNotInView = (_this.get('otherUser') && _this.get('otherUser.userid') !== msgObj.from.userid) ||
-										!_this.get('otherUser');
-
-					for(var i = 0; i < users.length; i += 1) {
-						var user = users[i];
-						if(user.get('userid') == msgObj.from.userid) {
-							var messages = user.hasOwnProperty('messages') ?
-											user.get('messages') : [];
-
-							messages.pushObject({
-								direction : 'other',
-								body : msgObj.message
-							});
-							user.set('messages', messages);
-							user.set('messageCount', messages.length);
-							user.set('areMessages', messages.length > 0 && isNotInView);
-						}
-						users[i] = user;
-					}
-
-					_this.set('users', users);
-
-					if(isNotInView) {
-						return;
-					}
-				});
+				socket.on("messageFrom", _this.handleMessageFromEvent.bind(_this));
 			};
+		},
+
+		handleMessageFromEvent : function (msgObj) {
+			var _this = this,
+				users = _this.get('users'),
+				isNotInView = (_this.get('otherUser') && _this.get('otherUser.userid') !== msgObj.from.userid) ||
+								!_this.get('otherUser');
+
+			for(var i = 0; i < users.length; i += 1) {
+				var user = users[i];
+				if(user.get('userid') == msgObj.from.userid) {
+					var messages = user.hasOwnProperty('messages') ?
+									user.get('messages') : [];
+
+					messages.pushObject({
+						direction : 'other',
+						body : msgObj.message
+					});
+					user.set('messages', messages);
+					user.set('messageCount', messages.length);
+					user.set('areMessages', messages.length > 0 && isNotInView);
+				}
+				users[i] = user;
+			}
+
+			_this.set('users', users);
+
+			if(isNotInView) {
+				return;
+			}
 		},
 		
 		_sendMessage: function () {
