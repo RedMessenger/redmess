@@ -32,7 +32,6 @@
 			selectUser : function (user) {
 				var socket = App.socket;
 				this.set("otherUser", user);
-
 				socket.emit("otheruser", user);
 			}
 		},
@@ -45,6 +44,15 @@
 					_this.set('hasJoined', true);
 				});
 			};
-		}
+		},
+		_clearBlankScreen : function () {
+			var users = this.get('users');
+			users = users.map(function (user) { return user.userid; });
+			console.log(users);
+			console.log(this.get('otherUser'));
+			if(this.get('otherUser') && users.indexOf(this.get('otherUser').userid) < 0) {
+				this.set('otherUser', null);
+			}
+		}.observes('users')
 	});
 })();
