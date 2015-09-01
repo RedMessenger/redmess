@@ -14,6 +14,8 @@
 		userid : "",
 		hasJoined : false,
 		users : [],
+		otherUser : null,
+		messages : [],
 
 		actions : {
 			submitForm : function () {
@@ -26,6 +28,12 @@
 				App.socket = socket;
 
 				socket.on('connect', this.handleConnection(socket, user_details));
+			},
+			selectUser : function (user) {
+				var socket = App.socket;
+				this.set("otherUser", user);
+
+				socket.emit("otheruser", user);
 			}
 		},
 		handleConnection : function (socket, user_details) {

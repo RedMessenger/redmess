@@ -13,6 +13,7 @@
             <div class="left">
               <h1>Messenger</h1>    
             </div>
+            <span class="user-details">{{name}} ({{userid}})</span>
           </header>
           <ol class="discussion">    
             <li class="other">      
@@ -29,7 +30,7 @@
                 <img src="unknown.jpeg" />      
               </div>     
               <div class="messages">        
-                <p>That makes sense.</p>        
+                <p>That makes sense. Isnt it</p>        
                 <p>Its a pretty small airport.</p>        
                 <time datetime="2009-11-13T20:14">37 mins</time>      
               </div>    
@@ -57,9 +58,9 @@
             </header>    
           <ol class="users-list">
             {{#each user in users}}
-              <li>
-                <div class="fullname">{{user.name}}</div>
-                <div class="onlineuserid">{{user.userid}}</div>
+              <li {{action "selectUser" user}}>
+                <div class="fullname">{{user.name}} </div>
+                <div class="onlineuserid"> ({{user.userid}}) </div>
               </li>
             {{/each}}
           </ol>

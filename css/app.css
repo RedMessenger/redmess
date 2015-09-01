@@ -220,4 +220,34 @@ textarea {
   overflow: hidden;
   display: flex;
   font-family: Georgia;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.users-list li:hover {
+  padding: 0.5rem;
+  overflow: hidden;
+  display: flex;
+  font-family: Georgia;
+  border-bottom: 1px solid #e5e5e5;
+  background: #e5e5e5;
+  cursor: pointer;
+}
+
+.user-details {
+	width: 350px;
+    float: right;
+    margin-right: 5px;
+    font-size: 15px;
+    color: #E46435;
+}
+
+.fullname {
+	color: gray;
+}
+
+.onlineuserid {
+	font-size: 11px;
+	color: #E46435;
+	font-style: italic;
+	line-height: 18px;
 }
