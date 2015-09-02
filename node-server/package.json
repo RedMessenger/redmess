@@ -1,0 +1,27 @@
+{
+  "name": "node-server",
+  "version": "1.0.0",
+  "description": "Handles socket events for messenger",
+  "main": "main.js",
+  "dependencies": {
+    "express": "^4.13.3",
+    "socket.io": "^1.3.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sabapk/messenger"
+  },
+  "keywords": [
+    "socket.io"
+  ],
+  "author": "Saba Hassan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sabapk/messenger/issues"
+  },
+  "homepage": "https://github.com/sabapk/messenger"
+}
